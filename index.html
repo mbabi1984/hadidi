@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0a0e14">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%23162232"/><stop offset="1" stop-color="%230a0e14"/></linearGradient><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%23f5a524"/><stop offset="1" stop-color="%23b9760a"/></linearGradient></defs><rect width="512" height="512" rx="110" fill="url(%23bg)"/><g stroke="url(%23g)" stroke-width="34" stroke-linecap="round" fill="none"><path d="M160 150v212M352 150v212M160 256h192M96 196v120M416 196v120"/></g></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%23162232"/><stop offset="1" stop-color="%230a0e14"/></linearGradient><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%23f5a524"/><stop offset="1" stop-color="%23b9760a"/></linearGradient></defs><rect width="512" height="512" rx="110" fill="url(%23bg)"/><g stroke="url(%23g)" stroke-width="34" stroke-linecap="round" fill="none"><path d="M160 150v212M352 150v212M160 256h192M96 196v120M416 196v120"/></g></svg>">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="حديدي">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="حديدي">
+<link rel="manifest" href='data:application/manifest+json,{"name": "حديدي — متابعة التمرين", "short_name": "حديدي", "start_url": ".", "display": "standalone", "background_color": "%230a0e14", "theme_color": "%230a0e14", "dir": "rtl", "lang": "ar", "icons": [{"src": "data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\"><defs><linearGradient id=\"bg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"%23162232\"/><stop offset=\"1\" stop-color=\"%230a0e14\"/></linearGradient><linearGradient id=\"g\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"%23f5a524\"/><stop offset=\"1\" stop-color=\"%23b9760a\"/></linearGradient></defs><rect width=\"512\" height=\"512\" rx=\"110\" fill=\"url(%23bg)\"/><g stroke=\"url(%23g)\" stroke-width=\"34\" stroke-linecap=\"round\" fill=\"none\"><path d=\"M160 150v212M352 150v212M160 256h192M96 196v120M416 196v120\"/></g></svg>", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}]}'>
 <title>حديدي — متابعة التمرين</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Rubik:wght@500;600;700&display=swap');
@@ -35,9 +43,9 @@
   .icon-btn svg{width:18px;height:18px;}
   .icon-btn:active{transform:scale(.94);}
 
-  .days{display:flex;gap:7px;margin-top:12px;}
+  .days{display:flex;gap:5px;margin-top:12px;}
   .day-tab{flex:1;border:1px solid var(--line);background:var(--panel-2);color:var(--ink-dim);
-    border-radius:11px;padding:9px 4px;font-family:'Cairo';font-weight:700;font-size:13.5px;cursor:pointer;
+    border-radius:10px;padding:8px 2px;font-family:'Cairo';font-weight:700;font-size:12px;cursor:pointer;
     display:flex;flex-direction:column;align-items:center;gap:2px;transition:.16s;}
   .day-tab .en{font-size:9px;font-weight:600;color:var(--ink-faint);font-family:'Rubik';letter-spacing:.6px;}
   .day-tab.active{background:linear-gradient(160deg,#182534,#131c28);border-color:var(--amber);color:var(--ink);}
@@ -186,9 +194,11 @@
     </div>
   </div>
   <div class="days" id="dayTabs">
-    <button class="day-tab active" data-day="push"><span>دفع</span><span class="en">PUSH</span></button>
-    <button class="day-tab" data-day="pull"><span>سحب</span><span class="en">PULL</span></button>
-    <button class="day-tab" data-day="legs"><span>أرجل</span><span class="en">LEGS</span></button>
+    <button class="day-tab active" data-day="upper"><span>علوي</span><span class="en">SAT</span></button>
+    <button class="day-tab" data-day="lower"><span>سفلي</span><span class="en">SUN</span></button>
+    <button class="day-tab" data-day="push"><span>دفع</span><span class="en">TUE</span></button>
+    <button class="day-tab" data-day="pull"><span>سحب</span><span class="en">WED</span></button>
+    <button class="day-tab" data-day="legs"><span>أرجل</span><span class="en">THU</span></button>
   </div>
 </header>
 
@@ -244,42 +254,60 @@
 <script>
 /* ===== v3: برنامج منقّح للتنشيف — بلا تكرار + تغطية كاملة ===== */
 const DEFAULT_PROGRAM={
+  upper:{name:'علوي',en:'UPPER',ex:[
+    {ar:'ضغط صدر',en:'Chest Press',grp:'صدر',sets:3,rep:'8-12',w:40,note:'<b>الأداء:</b> لوحي الكتف مسحوبين للخلف وملتصقين بالمقعد طول الحركة. المرفقين بزاوية 45° مش مفرودين للجانب (يحمي كتفك). نزول بطيء 2-3 ثواني، ودفع متحكّم. لا تقفل المرفق تمامًا بالأعلى.'},
+    {ar:'سحب علوي لاتس',en:'Lat Pulldown',grp:'ظهر',sets:3,rep:'8-12',w:55,up:true,note:'<b>ترقية:</b> 50 وصل 12-12-12 — ابدأ من 8-10.<br><br><b>الأداء:</b> اسحب بالمرفقين مش باليدين — تخيّل إنك بتدفع مرفقك للأسفل وللخلف. صدرك مرفوع، وميلان خفيف للخلف (10-15°) فقط. اعصر اللاتس بالأسفل ثانية، وارجع ببطء مع تمديد كامل.'},
+    {ar:'ضغط صدر مائل',en:'Incline Chest Press',grp:'صدر',sets:2,rep:'8-12',w:40,note:'مجموعتين — نترك طاقة لباقي اليوم.<br><br><b>الأداء:</b> أعلى الصدر. حافظ على انثناء أسفل الظهر الطبيعي بلا تقويس مبالغ. المرفقين تحت مستوى الكتف شوي. لو حسّيت الكتف بيشتغل أكتر من الصدر، قلّل زاوية الميلان.'},
+    {ar:'سحب بدعم الصدر (قبضة عريضة)',en:'Chest-Supported Row',grp:'ظهر',sets:3,rep:'8-12',w:0,note:'<b>جديد:</b> بدعم الصدر — يحمي أسفل الظهر.<br><br><b>الأداء:</b> صدرك ملتصق بالوسادة طول الوقت — هي اللي بتحمي أسفل ظهرك. اسحب بالمرفقين واعصر لوحي الكتف. لا ترفع كتفك للأذن. رجوع بطيء مع تمديد كامل للاتس.'},
+    {ar:'رفرفة جانبية كيبل',en:'Cable Lateral Raise',grp:'كتف',sets:3,rep:'12-20',w:5,note:'<b>الأداء:</b> وزن خفيف وتحكّم كامل. ارفع للجانب لمستوى الكتف فقط — مش أعلى (الارتفاع الزائد يهيّج الكتف). انثناء خفيف بالمرفق، والخنصر أعلى شوي من الإبهام. نزول بطيء 3 ثواني.'},
+    {ar:'فراشة خلفي',en:'Rear Delt Fly',grp:'كتف خلفي',sets:2,rep:'12-20',w:26,note:'<b>الأداء:</b> وزن خفيف — الدلت الخلفي عضلة صغيرة. المرفقين شبه مفرودين، والحركة من الكتف مش من الذراع. اعصر لوحي الكتف بالنهاية. لو حسّيت الترابيس بتشتغل، خفّف الوزن.'},
+    {ar:'باي كيرل بار',en:'Biceps Curl',grp:'ذراعين',sets:2,rep:'10-15',w:17.5,note:'<b>الأداء:</b> المرفقين ثابتين جنب الجسم — لا تحرّكهم للأمام. لا تتأرجح بالظهر. اعصر بالأعلى، ونزول بطيء 3 ثواني (الجزء البطيء هو اللي يبني). مدى كامل.'},
+    {ar:'ترايسبس جهاز',en:'Triceps Extension',grp:'ذراعين',sets:2,rep:'10-15',w:41,note:'<b>الأداء:</b> المرفقين ثابتين وقريبين من الجسم. الحركة من مفصل المرفق فقط. افرد تمامًا واعصر بالنهاية، وارجع ببطء بلا ما يتحرك كتفك.'},
+    {ar:'بلانك',en:'Plank',grp:'بطن',sets:3,rep:'30-60ث',w:0,core:true,note:'سجّل الثواني بخانة التكرار.<br><br><b>الأداء:</b> الجسم خط مستقيم من الرأس للكعب. شدّ بطنك ومؤخرتك. لا ترفع مؤخرتك ولا تنزّلها. تنفّس طبيعي. لو حسّيت أسفل ظهرك، شدّ بطنك أكتر أو قصّر المدة.'},
+  ]},
+  lower:{name:'سفلي',en:'LOWER',ex:[
+    {ar:'دفع الأرجل',en:'Leg Press',grp:'فخذ',sets:3,rep:'8-12',w:80,note:'اليوم الأساسي للأرجل.<br><br><b>الأداء:</b> القدمين بعرض الكتفين بمنتصف اللوحة. لا تقفل الركبة تمامًا بالأعلى. انزل لحد ما فخذك يوازي اللوحة تقريبًا — بلا ما يرتفع أسفل ظهرك عن المقعد (هي أهم نقطة أمان).'},
+    {ar:'تمديد الفخذ',en:'Leg Extension',grp:'أمامي',sets:3,rep:'10-15',w:40,note:'<b>الأداء:</b> حركة بطيئة ومتحكّمة. اعصر الفخذ الأمامي ثانية بالأعلى. لا تدفع بقوة مفاجئة. لو حسّيت ضغط على الركبة، قصّر المدى شوي أو خفّف الوزن.'},
+    {ar:'ثني الفخذ الخلفي',en:'Leg Curl',grp:'خلفي',sets:4,rep:'8-12',w:40,up:true,note:'⭐ <b>4 مجموعات</b> — الهامسترينغ أضعف نقطة. نزول بطيء 3 ثواني.<br><br><b>الأداء:</b> ⭐ النزول البطيء (3 ثواني) هو سرّ بناء الهامسترينغ. اعصر بالأعلى. على الجهاز المستلقي: خلّي حوضك ملتصق بالمقعد ولا تقوّس أسفل ظهرك. (ملاحظة: الجالس والمستلقي ميكانيكتهم مختلفة — لا تقارن أوزانهم).'},
+    {ar:'جهاز الجلوت / هيب ثرست',en:'Glute Machine',grp:'مؤخرة',sets:3,rep:'10-15',w:25,note:'<b>الأداء:</b> ادفع من الكعب. اعصر المؤخرة بقوة بالأعلى ثانية كاملة — هي اللي بتشغّل الجلوت مش المدى. حافظ على ذقنك للصدر وأضلاعك للأسفل بلا تقويس أسفل الظهر.'},
+    {ar:'هيب أدكشن',en:'Hip Adduction',grp:'ورك',sets:2,rep:'12-15',w:30,note:'<b>الأداء:</b> حركة بطيئة ومتحكّمة بالاتجاهين. لا تدع الوزن يسحبك للفتح بسرعة — الجزء البطيء مهم. مدى مريح بلا إجهاد للفخذ الداخلي.'},
+    {ar:'رفع السمانة',en:'Calf Press',grp:'سمانة',sets:3,rep:'10-15',w:80,opt:true,note:'⚠️ <b>حسب الكاحل</b> — في ألم؟ تجاهلها.<br><br><b>الأداء:</b> مدى كامل: نزول عميق (تمديد) ثم ارتفاع كامل على أطراف الأصابع. توقّف ثانية بالأعلى. ⚠️ بطيء ومتحكّم بلا نطّ — هذا يحمي وتر أخيل عندك.'},
+    {ar:'جهاز البطن / بلانك',en:'Ab Machine / Plank',grp:'بطن',sets:3,rep:'12-20',w:0,core:true,note:'<b>الأداء:</b> الحركة من انحناء العمود الفقري مش من الورك. زفير مع الشدّ. ⚠️ لو حسّيت أسفل ظهرك، وقّف فورًا وارجع للبلانك.'},
+  ]},
   push:{name:'دفع',en:'PUSH',ex:[
-    {ar:'ضغط صدر',en:'Chest Press',grp:'صدر',sets:3,rep:'10-12',w:40,note:'ثبّت الوزن — الهدف <b>12-12-12</b>.'},
-    {ar:'ضغط صدر مائل',en:'Incline Chest Press',grp:'صدر',sets:3,rep:'10-12',w:40,note:'جهازك القديم. الهدف <b>10-10-10</b>.'},
-    {ar:'فراشة صدر',en:'Pec Fly',grp:'صدر',sets:3,rep:'10-12',w:40,note:'عزل الصدر — الهدف <b>12-12-12</b>.'},
-    {ar:'ضغط كتف',en:'Shoulder Press',grp:'كتف',sets:3,rep:'10-12',w:25,warn:true,note:'⚠️ سخّن الكتف قبل. أي ألم فوق مستوى الكتف = وقّف فورًا.'},
-    {ar:'رفرفة جانبية كيبل',en:'Cable Lateral Raise',grp:'كتف',sets:3,rep:'12-15',w:5,note:'الدلت الجانبي — عرض الكتف.'},
-    {ar:'ترايسبس جهاز',en:'Triceps Extension',grp:'ترايسبس',sets:3,rep:'10-12',w:41,note:''},
-    {ar:'ترايسبس علوي كيبل',en:'Overhead Triceps',grp:'ترايسبس',sets:3,rep:'10-12',w:12.5,note:'الرأس الطويل — زاوية مختلفة عن الجهاز، مش تكرار.'},
-    {ar:'بلانك',en:'Plank',grp:'بطن',sets:3,rep:'30-60ث',w:0,core:true,note:'<b>إضافة:</b> البطن كان ناقص تمامًا. سجّل الثواني بخانة التكرار.'},
+    {ar:'ضغط صدر',en:'Chest Press',grp:'صدر',sets:3,rep:'8-12',w:40,note:'<b>الأداء:</b> لوحي الكتف مسحوبين للخلف وملتصقين بالمقعد طول الحركة. المرفقين بزاوية 45° مش مفرودين للجانب (يحمي كتفك). نزول بطيء 2-3 ثواني، ودفع متحكّم. لا تقفل المرفق تمامًا بالأعلى.'},
+    {ar:'ضغط صدر مائل',en:'Incline Chest Press',grp:'صدر',sets:3,rep:'8-12',w:40,note:'<b>الأداء:</b> أعلى الصدر. حافظ على انثناء أسفل الظهر الطبيعي بلا تقويس مبالغ. المرفقين تحت مستوى الكتف شوي. لو حسّيت الكتف بيشتغل أكتر من الصدر، قلّل زاوية الميلان.'},
+    {ar:'فراشة صدر',en:'Pec Fly',grp:'صدر',sets:3,rep:'12-15',w:40,note:'<b>الأداء:</b> انثناء خفيف ثابت بالمرفق. افتح لحد ما تحس تمدد بالصدر — بلا مبالغة (المبالغة تهيّج الكتف). اعصر بالوسط ثانية. لا تدع الوزن يسحب كتفك للخلف.'},
+    {ar:'ضغط كتف',en:'Shoulder Press',grp:'كتف',sets:2,rep:'8-12',w:25,warn:true,note:'⚠️ <b>مجموعتين فقط</b> — الكتف الأمامي يشتغل مع الصدر. سقف 25 كغ، أي ألم = وقّف.<br><br><b>الأداء:</b> ⚠️ سخّن الكتف منيح قبل. مدى نظيف ومتحكّم، ولا تنزل أقل من مستوى الأذن. لا تقفل المرفق بالأعلى. أي ألم أو شدّ فوق مستوى الكتف = وقّف فورًا.'},
+    {ar:'رفرفة جانبية كيبل',en:'Cable Lateral Raise',grp:'كتف',sets:3,rep:'12-20',w:5,note:'<b>الأداء:</b> وزن خفيف وتحكّم كامل. ارفع للجانب لمستوى الكتف فقط — مش أعلى (الارتفاع الزائد يهيّج الكتف). انثناء خفيف بالمرفق، والخنصر أعلى شوي من الإبهام. نزول بطيء 3 ثواني.'},
+    {ar:'ترايسبس جهاز',en:'Triceps Extension',grp:'ترايسبس',sets:3,rep:'10-15',w:41,note:'<b>الأداء:</b> المرفقين ثابتين وقريبين من الجسم. الحركة من مفصل المرفق فقط. افرد تمامًا واعصر بالنهاية، وارجع ببطء بلا ما يتحرك كتفك.'},
+    {ar:'ترايسبس علوي كيبل',en:'Overhead Triceps',grp:'ترايسبس',sets:2,rep:'10-15',w:12.5,warn:true,note:'⚠️ وضعية فوق الرأس — راقب الكتف. لو في شدّ، بدّلها بحركة كيبل عادية.<br><br><b>الأداء:</b> ⚠️ المرفقين قريبين من الرأس وثابتين. الحركة من المرفق فقط. لو حسّيت شدّ بالكتف، بدّلها بترايسبس كيبل عادي.'},
+    {ar:'بلانك',en:'Plank',grp:'بطن',sets:3,rep:'30-60ث',w:0,core:true,note:'<b>الأداء:</b> الجسم خط مستقيم من الرأس للكعب. شدّ بطنك ومؤخرتك. لا ترفع مؤخرتك ولا تنزّلها. تنفّس طبيعي. لو حسّيت أسفل ظهرك، شدّ بطنك أكتر أو قصّر المدة.'},
   ]},
   pull:{name:'سحب',en:'PULL',ex:[
-    {ar:'سحب علوي لاتس',en:'Lat Pulldown',grp:'ظهر',sets:3,rep:'10-12',w:45,note:'سحب عمودي — عرض الظهر.'},
-    {ar:'سحب جالس ضيق',en:'Close Seated Row',grp:'ظهر',sets:3,rep:'10-12',w:50,note:'سحب أفقي — سمك الظهر. <b>شلنا «لو رو»</b> لأنه نفس النمط.'},
-    {ar:'سحب ذراع مستقيم',en:'Straight-Arm Pulldown',grp:'ظهر',sets:3,rep:'12-15',w:0,note:'<b>إضافة:</b> يعزل اللاتس بدون الباي. ابدأ خفيف وركّز على الإحساس.'},
-    {ar:'فيس بول',en:'Face Pull',grp:'كتف خلفي',sets:3,rep:'15-20',w:10,note:'⭐ <b>إضافة مهمة لكتفك:</b> تقوّي الدوّارة الخارجية ومنتصف الترابيس — وقاية وعلاج لانحشار الكتف. <b>وزن خفيف جدًا</b>، الحبل بمستوى الوجه، اسحب لحتى تصير إيديك جنب أذنيك مع دوران خارجي، واعصر لوحي الكتف. صفر ألم.'},
-    {ar:'فراشة خلفي',en:'Rear Delt Fly',grp:'كتف خلفي',sets:2,rep:'10-12',w:26,note:'<b>26 كغ مش 33</b> — الأخف أعطى 12-10-8، الأثقل 10-8-8. نزّلناها لمجموعتين لأن الفيس بول بيغطي نفس المنطقة.'},
-    {ar:'لور باك',en:'Lower Back',grp:'أسفل الظهر',sets:2,rep:'15',w:55,note:''},
-    {ar:'باي همر كيبل',en:'Hammer Curl',grp:'باي',sets:3,rep:'10-12',w:16,note:'براكياليس + ساعد.'},
-    {ar:'باي كيرل بار',en:'Biceps Curl',grp:'باي',sets:3,rep:'10-12',w:15,note:'الهدف <b>14-14-12</b>.'},
-    {ar:'رفع أرجل معلّق/مستلقي',en:'Leg Raise',grp:'بطن',sets:3,rep:'12-15',w:0,core:true,note:'<b>إضافة:</b> أسفل البطن.'},
+    {ar:'سحب علوي لاتس',en:'Lat Pulldown',grp:'ظهر',sets:3,rep:'8-12',w:55,up:true,note:'<b>ترقية:</b> من 50.<br><br><b>الأداء:</b> اسحب بالمرفقين مش باليدين — تخيّل إنك بتدفع مرفقك للأسفل وللخلف. صدرك مرفوع، وميلان خفيف للخلف (10-15°) فقط. اعصر اللاتس بالأسفل ثانية، وارجع ببطء مع تمديد كامل.'},
+    {ar:'سحب جالس ضيق',en:'Close Seated Row',grp:'ظهر',sets:3,rep:'8-12',w:50,note:'<b>الأداء:</b> صدر مرفوع وظهر مستقيم. اسحب للبطن واعصر لوحي الكتف. لا تتأرجح بالجذع للخلف. رجوع بطيء مع تمديد كامل.'},
+    {ar:'سحب بدعم الصدر (قبضة عريضة)',en:'Chest-Supported Row',grp:'ظهر',sets:3,rep:'8-12',w:0,note:'يحمي أسفل الظهر.<br><br><b>الأداء:</b> صدرك ملتصق بالوسادة طول الوقت — هي اللي بتحمي أسفل ظهرك. اسحب بالمرفقين واعصر لوحي الكتف. لا ترفع كتفك للأذن. رجوع بطيء مع تمديد كامل للاتس.'},
+    {ar:'سحب ذراع مستقيم',en:'Straight-Arm Pulldown',grp:'ظهر',sets:2,rep:'12-15',w:38,up:true,note:'<b>ترقية:</b> 35 وصل 12-12-12.<br><br><b>الأداء:</b> الذراعين شبه مفرودين (انثناء خفيف ثابت). الحركة من الكتف فقط — تخيّل إنك بترسم قوس. اعصر اللاتس بالأسفل. الهدف الإحساس مش الوزن.'},
+    {ar:'فيس بول',en:'Face Pull',grp:'كتف خلفي',sets:3,rep:'15-20',w:15,up:true,note:'⭐ <b>3 مجموعات</b> — علاجية لكتفك، الفائدة الوقائية تستاهل.<br><br><b>الأداء:</b> ⭐ حركة علاجية لكتفك. الحبل بمستوى الوجه، اسحب لحتى تصير إيديك جنب أذنيك مع دوران خارجي للكتف. وزن خفيف وتكرار عالي. اعصر لوحي الكتف. صفر ألم.'},
+    {ar:'باي همر كيبل',en:'Hammer Curl',grp:'ذراعين',sets:3,rep:'8-12',w:20,note:'<b>الأداء:</b> قبضة محايدة (الإبهام لفوق). المرفقين ثابتين جنب الجسم. نزول بطيء. تشتغل على البراكياليس والساعد.'},
+    {ar:'باي كيرل بار',en:'Biceps Curl',grp:'ذراعين',sets:2,rep:'10-15',w:17.5,note:'قبل الهمر لو انهارت أرقامك.<br><br><b>الأداء:</b> المرفقين ثابتين جنب الجسم — لا تحرّكهم للأمام. لا تتأرجح بالظهر. اعصر بالأعلى، ونزول بطيء 3 ثواني (الجزء البطيء هو اللي يبني). مدى كامل.'},
+    {ar:'لور باك',en:'Lower Back Extension',grp:'أسفل الظهر',sets:2,rep:'12-15',w:55,note:'<b>الأداء:</b> حركة بطيئة ومتحكّمة. لا تفرط بالتقويس للخلف — توقّف عند الاستقامة. ⚠️ لو ظهرك متعب أو مشدود، تخطّاها بلا ذنب.'},
   ]},
   legs:{name:'أرجل',en:'LEGS',ex:[
-    {ar:'دفع الأرجل',en:'Leg Press',grp:'فخذ كامل',sets:3,rep:'12-15',w:70,note:'الأثقل أول وأنت نشيط.'},
-    {ar:'هيب ثرست',en:'Hip Thrust',grp:'مؤخرة',sets:3,rep:'12-15',w:20,note:'<b>نقلناه للمقدمة</b> — كنت تتخطّاه لأنه آخر شي. 20 كغ مضبوط على جهازك.'},
-    {ar:'ثني الفخذ الخلفي',en:'Leg Curl',grp:'خلفي',sets:3,rep:'12-15',w:40,note:'⭐ <b>أولوية</b> — الخلفي أضعف من الأمامي. نزول بطيء 3 ثواني.'},
-    {ar:'تمديد الفخذ',en:'Leg Extension',grp:'أمامي',sets:3,rep:'12-15',w:40,note:''},
-    {ar:'هيب أبدكشن',en:'Hip Abduction',grp:'ورك',sets:2,rep:'15-20',w:40,note:''},
-    {ar:'هيب أدكشن',en:'Hip Adduction',grp:'ورك',sets:2,rep:'15-20',w:30,note:'<b>30 مش 35</b> — كانت 11-9، نزّلها ووصّلها 15+.'},
-    {ar:'رفع السمانة',en:'Calf Raise',grp:'سمانة',sets:3,rep:'15-20',w:70,opt:true,note:'⚠️ <b>حسب الكاحل</b> — في ألم؟ تجاهلها. بلا ألم؟ بطيء ومتحكّم بلا نطّ.'},
-    {ar:'كرنش بالكيبل',en:'Cable Crunch',grp:'بطن',sets:3,rep:'12-15',w:0,core:true,note:'<b>إضافة:</b> أعلى البطن بمقاومة.'},
+    {ar:'دفع الأرجل',en:'Leg Press',grp:'فخذ',sets:3,rep:'10-15',w:80,note:'جلسة ثانية متوسطة الحجم.<br><br><b>الأداء:</b> القدمين بعرض الكتفين بمنتصف اللوحة. لا تقفل الركبة تمامًا بالأعلى. انزل لحد ما فخذك يوازي اللوحة تقريبًا — بلا ما يرتفع أسفل ظهرك عن المقعد (هي أهم نقطة أمان).'},
+    {ar:'ثني الفخذ الخلفي',en:'Leg Curl',grp:'خلفي',sets:3,rep:'10-15',w:40,note:'<b>الأداء:</b> ⭐ النزول البطيء (3 ثواني) هو سرّ بناء الهامسترينغ. اعصر بالأعلى. على الجهاز المستلقي: خلّي حوضك ملتصق بالمقعد ولا تقوّس أسفل ظهرك. (ملاحظة: الجالس والمستلقي ميكانيكتهم مختلفة — لا تقارن أوزانهم).'},
+    {ar:'تمديد الفخذ',en:'Leg Extension',grp:'أمامي',sets:3,rep:'12-15',w:40,note:'<b>الأداء:</b> حركة بطيئة ومتحكّمة. اعصر الفخذ الأمامي ثانية بالأعلى. لا تدفع بقوة مفاجئة. لو حسّيت ضغط على الركبة، قصّر المدى شوي أو خفّف الوزن.'},
+    {ar:'هيب أبدكشن',en:'Hip Abduction',grp:'ورك',sets:3,rep:'12-20',w:40,note:'<b>الأداء:</b> ميلان خفيف للأمام يزيد تفعيل الجلوت المتوسط. حركة بطيئة، واعصر بالخارج ثانية. لا تستعمل الزخم.'},
+    {ar:'جهاز الجلوت',en:'Glute Machine',grp:'مؤخرة',sets:2,rep:'10-15',w:25,note:'<b>الأداء:</b> ادفع من الكعب. اعصر المؤخرة بقوة بالأعلى ثانية كاملة — هي اللي بتشغّل الجلوت مش المدى. حافظ على ذقنك للصدر وأضلاعك للأسفل بلا تقويس أسفل الظهر.'},
+    {ar:'رفع السمانة',en:'Calf Press',grp:'سمانة',sets:3,rep:'10-15',w:80,opt:true,note:'⚠️ حسب الكاحل.<br><br><b>الأداء:</b> مدى كامل: نزول عميق (تمديد) ثم ارتفاع كامل على أطراف الأصابع. توقّف ثانية بالأعلى. ⚠️ بطيء ومتحكّم بلا نطّ — هذا يحمي وتر أخيل عندك.'},
+    {ar:'رفع أرجل',en:'Leg Raise',grp:'بطن',sets:3,rep:'12-20',w:0,core:true,note:'<b>الأداء:</b> ألصق أسفل ظهرك بالأرض/المسند طول الحركة. ارفع بالبطن مش بالزخم. نزول بطيء. لو أسفل ظهرك ارتفع، قصّر المدى.'},
   ]},
 };
 
-const LS_LOG='hadidi_log_v3',LS_STATE='hadidi_state_v3',LS_PROG='hadidi_prog_v3',LS_TMR='hadidi_tmr_v3';
-const BODY_KG=106, AGE=42;
-let PROGRAM=loadProg(),currentDay='push',state=loadState(),startTime=loadTimer(),timerInt=null;
+const LS_LOG='hadidi_log_v4',LS_STATE='hadidi_state_v4',LS_PROG='hadidi_prog_v4',LS_TMR='hadidi_tmr_v4';
+const BODY_KG=105, AGE=42;
+let PROGRAM=loadProg(),currentDay='upper',state=loadState(),startTime=loadTimer(),timerInt=null;
 
 function loadProg(){try{const p=JSON.parse(localStorage.getItem(LS_PROG));return p||JSON.parse(JSON.stringify(DEFAULT_PROGRAM));}catch(e){return JSON.parse(JSON.stringify(DEFAULT_PROGRAM));}}
 function saveProg(){localStorage.setItem(LS_PROG,JSON.stringify(PROGRAM));}
